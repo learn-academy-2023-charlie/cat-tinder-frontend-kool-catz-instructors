@@ -17,6 +17,7 @@ const App = () => {
   return(
     <>
       <Header />
+      <h1>Aloha</h1>
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/catindex" element={<CatIndex />}/>
