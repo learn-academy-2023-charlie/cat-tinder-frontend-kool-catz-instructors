@@ -145,3 +145,68 @@ Used [reactstrap](https://reactstrap.github.io) and [cat font](https://www.fonts
     />
   </a>
 ```
+***
+## Cat Tinder Testing 6/7/23
+
+TDD - Test Driven Development - gives us confidence in the functionality of our code
+RED-GREEN-REFACTOR
+write the test
+good failure
+code to make the test pass
+see it pass
+refactor: less lines, more efficient code
+
+Running the terminal command S `yarn create react-app` give us access to React Testing Library and Jest.
+Jest: Javascript testing framework
+
+[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): provides methods to help write tests
+```bash
+Watch Usage
+ › Press a to run all tests.
+ › Press f to run only failed tests.
+ › Press o to only run tests related to changed files.
+ › Press q to quit watch mode.
+ › Press i to run failing tests interactively.
+ › Press p to filter by a filename regex pattern.
+ › Press t to filter by a test name regex pattern.
+ › Press Enter to trigger a test run.
+```
+
+React Testing tools
+- render:
+- screen:
+- debugging:
+  - screen.debug
+  - screen.logTestingPlaygroundURL()
+
+Test Template
+```js
+// import dependencies and react components
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom'
+import App from './App';
+
+// describe-it-expect jest structure
+describe('<App />', () => {
+  it('renders a greeting to the Kool Catz space', () => {
+    // render the component
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    )
+
+    // debugging tools
+    screen.debug
+    screen.logTestingPlaygroundURL()
+
+    // .getByRole
+    const koolImg = screen.getByRole('img', {
+      name: /cat fonts/i
+    })
+
+    expect(koolImg).toBeInTheDocument()
+  })
+})
+
+```
