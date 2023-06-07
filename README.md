@@ -1,70 +1,147 @@
-# Getting Started with Create React App
+# Cat Tinder Project (Frontend) - 6/6/23 Charlie
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## branch: main
+### Empty repo
+- Create empty repo through the github classroom link
+### react app
+- Create react app: 
+  - $ `yarn create react-app cat-tinder-frontend`
+  - $ `cd cat-tinder-frontend`
+  - $ `git remote add origin https://github.com/learn-academy-2023-charlie/cat-tinder-frontend-kool-catz-instructors.git`
+  - $ `git branch -m main`
+  - $ `git status`
+  - $ `code .`
+  - $ `git status`
+  - $ `git add .`
+  - $ `git commit -m "initial commit"`
+  - $ `git push origin main`
+  - $ `yarn start`
+- Request for branch protections
 
-## Available Scripts
+## branch: frontend-structure
+### Basic functional component
+```js
+  import React from "react"
 
-In the project directory, you can run:
+  const App = () => {
+    return(
+      <>
+        <h1>Aloha, Galaxy!!!</h1>
+      </>
+    )
+  }
 
-### `yarn start`
+  export default App
+```
+### Additional react component structure
+Create Directories to organize files that will be needed for the Cat Tinder application in the src directory: assets, components, pages  
+  - Assets: images
+  - Components: Create Components Files to store the react components that will be present on every page: Header and Footer
+  - Pages: Create Pages Files to store the react components that will store the code related to reading (CatIndex, CatShow, Home, NotFound), creating (CatNew), updating(CatEdit), and deleting data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Styling and Functionality dependencies for React components
+- $ yarn add bootstrap
+- $ yarn add reactstrap
+- Add to src/index.js: import 'bootstrap/dist/css/bootstrap.min.css'
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### React Routes
+Setup structure to navigate between pages  
+1. install dependencies: $ `yarn add react-router-dom`
+2. import and use applicable built-in routing component BrowserRouter from `react-router-dom` onto index.js
+  - BrowserRoute is the parent component used to store all other routing components.
+```js
+  // index.js
+  import { BrowserRouter } from 'react-router-dom';
 
-### `yarn test`
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+```
+3. import and use applicable built-in routing components Routes and Route from `react-router-dom` onto App.js
+  - `Routes` renders the applicable component by matching the request to to its nested `Route`
+  - attributes used on each Route:
+    - path will be assigned the custom url for each page 
+    - element will be assigned the component call for each page
+```js
+  // App.js
+  import { Routes, Route } from "react-router-dom"
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  const App = () => {
+    return(
+      <>
+        <Header />
+        <h1>Aloha, Galaxy!!!</h1>
+        <Routes>
+          <Route path="/" element={<Home />}/>
+          <Route path="/catindex" element={<CatIndex />}/>
+        </Routes>
+        <Footer />
+      </>
+    )
+  }
+```
 
-### `yarn build`
+### Mock data to test functionality of react app
+- create a file to store mock data on the src directory
+- store data in an array
+```js
+  // src/mockCats.js
+  const cats = [ 
+    ...
+  ]
+  export default cats
+```
+- import data onto App.js
+- set data into state 
+```js
+  import mockCats from "./mockCats"
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  const App = () => {
+    const [cats, setCats] = useState(mockCats)
+    console.log("all the cats", cats)
+```
+***
+Additional Notes
+***
+Used [reactstrap](https://reactstrap.github.io) and [cat font](https://www.fontspace.com/category/cat) for styling
+- header:
+```js
+  <Navbar
+    className="my-2"
+    color="info"  
+  >
+    <a href="/">
+      <img 
+        src="https://see.fontimg.com/api/renderfont4/VGWjy/eyJyIjoiZnMiLCJoIjoxMzAsInciOjIwMDAsImZzIjo2NSwiZmdjIjoiIzAwMDAwMCIsImJnYyI6IiNGRkZGRkYiLCJ0IjoxfQ/S29vbCBDYXR6/meows.png" 
+        alt="Cat fonts" 
+        height="20" 
+      />
+    </a>
+  </Navbar>
+```
+- footer:
+```js
+  <Navbar
+    className="my-2"
+    color="info"
+    fixed="bottom"
+  >
+    <NavbarBrand href="/">
+      &copy; Charlean & Nicole | 2023
+    </NavbarBrand>
+  </Navbar>
+```
+- notfound:
+```js
+  <a href="/">
+    <img 
+      src="https://see.fontimg.com/api/renderfont4/2OzB8/eyJyIjoiZnMiLCJoIjoxMzAsInciOjIwMDAsImZzIjo2NSwiZmdjIjoiIzAwMDAwMCIsImJnYyI6IiNGRkZGRkYiLCJ0IjoxfQ/Tm90IEZvdW5k/oriental-cats-light.png" 
+      alt="Cat fonts"
+    />
+  </a>
+```
