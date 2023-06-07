@@ -5,7 +5,7 @@ import Home from '../pages/Home';
 
 describe('<Home />', () => {
   // image
-  it('has an image', () => {
+  it('has a heading', () => {
     render(
       <BrowserRouter>
         <Home />
@@ -13,7 +13,7 @@ describe('<Home />', () => {
     )
     screen.logTestingPlaygroundURL()
     const homeText = screen.getByRole('heading', {
-      name: /home page/i
+      name: /aloha, kool catz/i
     })
     expect(homeText).toBeInTheDocument()
   })
