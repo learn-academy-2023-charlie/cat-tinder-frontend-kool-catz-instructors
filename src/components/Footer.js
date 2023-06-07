@@ -1,9 +1,18 @@
 import React from "react"
+import { Navbar, NavbarBrand } from "reactstrap"
 
 const Footer = () => {
   return(
     <>
-      <h3>Footer component</h3>
+      <Navbar
+        className="my-2"
+        color="info"
+        fixed="bottom"
+      >
+        <NavbarBrand href="/">
+          &copy; Charlean & Nicole | 2023
+        </NavbarBrand>
+      </Navbar>
     </>
   )
 }
