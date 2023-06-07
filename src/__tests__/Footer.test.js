@@ -1,7 +1,7 @@
 // import dependencies and react components
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom'
-import Footer from './Footer';
+import Footer from '../components/Footer';
 
 describe('<Footer />', () => {
   // navbar
@@ -13,18 +13,8 @@ describe('<Footer />', () => {
     )
     screen.logTestingPlaygroundURL()
     const footLink = screen.getByRole('link', {
-      
-    })  
+      name: /charlean & nicole/i
+    })
+    expect(footLink).toBeInTheDocument()  
   })
-
-  // alt text
-  it('has attributes assigned to the image', () => {
-    render(
-      <BrowserRouter>
-        <Footer />
-      </BrowserRouter>
-    )
- 
-  })
-
 })

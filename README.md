@@ -176,8 +176,8 @@ React Testing tools
 - render:
 - screen:
 - debugging:
-     screen.debug
-    screen.logTestingPlaygroundURL()
+  - screen.debug
+  - screen.logTestingPlaygroundURL()
 
 Test Template
 ```js
@@ -186,16 +186,21 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom'
 import App from './App';
 
-
+// describe-it-expect jest structure
 describe('<App />', () => {
   it('renders a greeting to the Kool Catz space', () => {
+    // render the component
     render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
     )
-    // screen.debug
+
+    // debugging tools
+    screen.debug
     screen.logTestingPlaygroundURL()
+
+    // .getByRole
     const koolImg = screen.getByRole('img', {
       name: /cat fonts/i
     })
