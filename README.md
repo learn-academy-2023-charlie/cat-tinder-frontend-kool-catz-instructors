@@ -147,9 +147,15 @@ Used [reactstrap](https://reactstrap.github.io) and [cat font](https://www.fonts
 ```
 ***
 ## Cat Tinder Testing 6/7/23
+***The more your tests resemble the way your software is used, the more confidence they can give you. Kent Dodds/React Testing Library***
+### TDD 
+- Test Driven Development - gives us confidence in the functionality of our code    
+We will use a combination of three categories of testing principles:  
+- Static tests that look for syntax mistakes and spelling errors  
+- Unit tests that look for isolated code actions 
+- Integration tests that test how your code works together  
 
-TDD - Test Driven Development - gives us confidence in the functionality of our code  
-RED-GREEN-REFACTOR
+### RED-GREEN-REFACTOR
 1. write the test
 2. good failure
 3. code to make the test pass
@@ -158,7 +164,10 @@ RED-GREEN-REFACTOR
 
 Running the terminal command S `yarn create react-app` give us access to React Testing Library and Jest.
 - Jest: Javascript testing framework
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): provides methods to help write tests
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): provides methods to help write tests  
+
+To see the testing suite: $ `yarn test` 
+
 ```bash
 Watch Usage
  › Press a to run all tests.
@@ -170,52 +179,78 @@ Watch Usage
  › Press t to filter by a test name regex pattern.
  › Press Enter to trigger a test run.
 ```
-React Testing tools
-- render: 
-- screen: 
-- debugging:
-  - screen.debug
-  - screen.logTestingPlaygroundURL()
 
-Test Template
+### React Testing folder/file structure
+- create a test directory `__tests__` in the src directory
+- create a test file named the same as the react component with extension `.test.js`
+
+### React Testing methods
+- render: method to virtually render the React component
+- screen: access to the rendered HTML 
+- debugging tools
+  - screen.debug(): displays the result of the render() call
+  - screen.logTestingPlaygroundURL(): returns a link that gives access to the rendered HTML, DOM, available RTL methods to query each DOM element, and proper syntax for each query
+- query methods
+  - getByText(): find the element by its text content
+  - getByRole(): find the element by its role 
+  - getByLabelText(): find the element by its label 
+  - getAllByAltText(): find all the elements containing the alt text, stores them in an array
+- assertive methods
+  - toBeInTheDocument(): check if the element is present
+  - toHaveAttribute(): check if the element contains a certain attribute with its assigned value
+
+### Reference for accessibility roles
+[ARIA associated with HTML tags](https://www.w3.org/TR/html-aria/)
+
+### React Test Library Test Template
 ```js
-// import dependencies and react components
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom'
-import App from './App';
+  // import dependencies and react components
+  import { render, screen } from '@testing-library/react';
+  import { BrowserRouter } from 'react-router-dom'
+  import App from './App';
 
-// describe-it-expect jest structure
-describe('<App />', () => {
-  it('renders a greeting to the Kool Catz space', () => {
-    // render the component
-    render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    )
+  // describe-it-expect jest structure
+  describe('<App />', () => {
+    it('renders a greeting to the Kool Catz space', () => {
+      // render the component
+      render(
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      )
 
-    // debugging tools
-    screen.debug
-    screen.logTestingPlaygroundURL()
+      // debugging tools
+      screen.debug()
+      screen.logTestingPlaygroundURL()
 
-    // .getByRole
-    const koolImg = screen.getByRole('img', {
-      name: /cat fonts/i
+      // query with .getByRole
+      const koolImg = screen.getByRole('img', {
+        name: /cat fonts/i
+      })
+
+      // assertion that checks if the element is in the DOM
+      expect(koolImg).toBeInTheDocument()
     })
-
-    expect(koolImg).toBeInTheDocument()
   })
-})
-
 ```
 ***
-## Read Functionality
-- props: read-only, pass in one direction down to the child/nested component
-<Route path="/catindex" element={<CatIndex cats={cats}/>}/>
+## Read Functionality: CatIndex
+### Process
+- modify the route: url and passing props
+- accept props on the react component
+- iterate across the array to display the values on the UI
+- test coverage for the react component
 
-- accept the props on the react component
+### Modify the route
+- props: read-only, pass in one direction down to the child/nested component  
+`<Route path="/catindex" element={<CatIndex cats={cats}/>}/>`
 
-- [Reactstrap link](https://reactstrap.github.io/)
+### Accept the props on the react component
+- destructure applicable prop for the react component  
+`const CatIndex = ({cats}) => {`
+
+### Display data to UI
+- use styling components from [Reactstrap](https://reactstrap.github.io/)
 ```js
   <Card
     style={{
@@ -236,15 +271,47 @@ describe('<App />', () => {
     </CardBody>
   </Card>
 ```
-- Creating a test file
-<CatIndex cats={mockCats}/>
 
-Process
+### Test coverage for react component
+- Make sure to provide props to the component call on the render() for the test
+```js
+  import mockCats from '../mockCats'
+  ...
+  render(
+    <BrowserRouter>
+      <CatIndex cats={mockCats}/>
+    </BrowserRouter>
+  )
+```
+- Sometime the page can still be waiting for the data to load, this can cause some pages to fail to render because the functionality ran before the data could load. Therefore, setup conditional rendering `cats?` on CatIndex.js
+`{cats?.map((value, index) => {`
+
+## Read Functionality: CatShow
+### Process
 - modify the route: url and passing props
 - accept props on the react component
-- iterate across the array to display the values on the UI
+- access params to identify the one value to display on the UI
+- test coverage for the react component
 
-- Cat Show UI
+### Modify the route
+- props: read-only, pass in one direction down to the child/nested component    
+`<Route path="/catshow/:id" element={<CatShow cats={cats}/>}/>`
+
+### Accept the props on the react component
+- destructure applicable prop for the react component  
+`const CatShow = ({cats}) => {`
+
+### Display data to UI
+- access the id param from the URL by using react hook useParams()  
+`const { id } = useParams()`
+- iterate across the values in the array and return the value with the id that matches the id param
+- since the id param is a string from the URL, use the unary operator `+` to convert it to a number
+```js
+  let currentCat = cats.find((cat) => {
+    return cat.id === +id
+  })
+```
+- use styling components from reactstrap to display data to UI
 ```js
   <Card
     style={{
@@ -274,13 +341,28 @@ Process
     </CardBody>
   </Card>
 ```
-
-- [Memory Router](https://reactrouter.com/en/main/router-components/memory-router)
-
+- Setup conditional rendering
 ```js
-  <MemoryRouter initialEntries={["/catshow/1"]}>
-    <Routes>
-      <Route path="/catshow/:id" element={<CatShow cats={mockCats}/>}/>
-    </Routes>
-  </MemoryRouter>
+  // cats? on the find method
+  `let currentCat = cats?.find((cat) => {`
+  // within the component return {currentCat && ()}
+  {currentCat && (
+    <Card>...</Card>
+  )}
 ```
+
+### Test coverage
+- Provide the id params required for the url and the props required for the component call
+- [Memory Router](https://reactrouter.com/en/main/router-components/memory-router)
+```js
+  import { MemoryRouter, Routes, Route } from 'react-router-dom'
+  ...
+  render(
+    <MemoryRouter initialEntries={["/catshow/1"]}>
+      <Routes>
+        <Route path="/catshow/:id" element={<CatShow cats={mockCats}/>}/>
+      </Routes>
+    </MemoryRouter>
+  )
+```
+

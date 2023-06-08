@@ -18,6 +18,7 @@ describe('<CatShow />', () => {
     const catName = screen.getByRole("heading", {
       name: /mitt/i
     })
-  })
 
+    expect(screen.getByText(/mittens/i)).toHaveDisplayValue("Mittens")
+  })
 })
