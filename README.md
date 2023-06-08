@@ -366,3 +366,52 @@ Watch Usage
   )
 ```
 
+## CatNew 
+
+1) show
+2) create
+3) update
+
+4) new
+5) edit
+
+6) destroy / delete
+7) index
+
+- **new** and **edit** are just routes that will display a form
+
+## User Stories
+✅ User can fill out a form to create a new cat
+```js
+  <Form>
+    <FormGroup>
+    // 'for' attr needs to match your id attr for the label below it
+      <Label for="exampleEmail">
+        Email
+      </Label>
+      <Input
+        // 'id' needs to match the 'for' attr value
+        id="exampleEmail"
+        // name is correlated with our database key aka I want my input to go here 
+        name="email"
+        // Text to be seen on render
+        placeholder="with a placeholder"
+        // 
+        type="email"
+      />
+    </FormGroup>
+  </Form>
+```
+
+
+✅ On submit be redirected to cat index
+
+### Developer Stories
+✅ As a developer, I can store the cat object in state.
+✅ As a developer, I can pass the cat object to App.js on submit and see the cat object logged in the console.
+  > created a state in CatNew
+  > used event listeners to track and store user inputs
+  > created createCat method to relay the information back to App.js
+  > created a handleClick to send it back
+
+✅ As a developer, I have test coverage on my new page.
