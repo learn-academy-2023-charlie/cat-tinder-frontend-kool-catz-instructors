@@ -1,3 +1,13 @@
 body {
   background-color: rgb(247, 231, 231);
 }
+
+.card {
+  margin: 2rem 0;
+}
+
+#cat-index-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
