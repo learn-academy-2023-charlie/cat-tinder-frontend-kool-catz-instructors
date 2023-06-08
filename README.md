@@ -148,18 +148,17 @@ Used [reactstrap](https://reactstrap.github.io) and [cat font](https://www.fonts
 ***
 ## Cat Tinder Testing 6/7/23
 
-TDD - Test Driven Development - gives us confidence in the functionality of our code
+TDD - Test Driven Development - gives us confidence in the functionality of our code  
 RED-GREEN-REFACTOR
-write the test
-good failure
-code to make the test pass
-see it pass
-refactor: less lines, more efficient code
+1. write the test
+2. good failure
+3. code to make the test pass
+4. see it pass
+5. refactor: less lines, more efficient code  
 
 Running the terminal command S `yarn create react-app` give us access to React Testing Library and Jest.
-Jest: Javascript testing framework
-
-[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): provides methods to help write tests
+- Jest: Javascript testing framework
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/): provides methods to help write tests
 ```bash
 Watch Usage
  › Press a to run all tests.
@@ -171,10 +170,9 @@ Watch Usage
  › Press t to filter by a test name regex pattern.
  › Press Enter to trigger a test run.
 ```
-
 React Testing tools
-- render:
-- screen:
+- render: 
+- screen: 
 - debugging:
   - screen.debug
   - screen.logTestingPlaygroundURL()
@@ -209,4 +207,80 @@ describe('<App />', () => {
   })
 })
 
+```
+***
+## Read Functionality
+- props: read-only, pass in one direction down to the child/nested component
+<Route path="/catindex" element={<CatIndex cats={cats}/>}/>
+
+- accept the props on the react component
+
+- [Reactstrap link](https://reactstrap.github.io/)
+```js
+  <Card
+    style={{
+      width: '18rem'
+    }}
+  >
+    <img
+      alt={`image of ${value.name} who is a fluffy white cat`}
+      src={value.image}
+    />
+    <CardBody>
+      <CardTitle tag="h5">
+        {value.name}
+      </CardTitle>
+      <Button>
+        Click to View Meow
+      </Button>
+    </CardBody>
+  </Card>
+```
+- Creating a test file
+<CatIndex cats={mockCats}/>
+
+Process
+- modify the route: url and passing props
+- accept props on the react component
+- iterate across the array to display the values on the UI
+
+- Cat Show UI
+```js
+  <Card
+    style={{
+      width: '18rem'
+    }}
+  >
+    <CardBody>
+      <CardTitle tag="h5">
+        {currentCat.name}
+      </CardTitle>
+      <CardSubtitle
+        className="mb-2 text-muted"
+        tag="h6"
+      >
+        {currentCat.age}
+      </CardSubtitle>
+    </CardBody>
+    <img
+      alt={`image of ${currentCat.name} who is a fluffy white cat`}
+      src={currentCat.image}
+      width="100%"
+    />
+    <CardBody>
+      <CardText>
+        {currentCat.hobby}
+      </CardText>
+    </CardBody>
+  </Card>
+```
+
+- [Memory Router](https://reactrouter.com/en/main/router-components/memory-router)
+
+```js
+  <MemoryRouter initialEntries={["/catshow/1"]}>
+    <Routes>
+      <Route path="/catshow/:id" element={<CatShow cats={mockCats}/>}/>
+    </Routes>
+  </MemoryRouter>
 ```
