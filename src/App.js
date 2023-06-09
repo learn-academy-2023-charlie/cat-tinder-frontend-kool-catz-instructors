@@ -16,6 +16,7 @@ const App = () => {
   // console.log("all the cats", cats)
 
   const createCat = (createdCat) => {
+    // This console log is still serving it's purpose until backend and frontend are connected
     console.log("my created cat:", createdCat)
   }
 

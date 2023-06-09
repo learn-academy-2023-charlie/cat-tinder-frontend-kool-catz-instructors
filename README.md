@@ -366,8 +366,9 @@ Watch Usage
   )
 ```
 
-## CatNew 
+## Create Functionality: CatNew
 
+7 RESTful routes:
 1) show
 2) create
 3) update
@@ -405,9 +406,26 @@ Watch Usage
 
 
 ✅ On submit be redirected to cat index
+```js
+  <Button onClick={handleClick} name="submit">
+    Submit
+  </Button>
+```
 
 ### Developer Stories
 ✅ As a developer, I can store the cat object in state.
+
+```js
+  const [newCat, setNewCat] = useState(
+    {
+      name: "",
+      age: "",
+      hobby: "",
+      image: ""
+    }
+  )
+```
+
 ✅ As a developer, I can pass the cat object to App.js on submit and see the cat object logged in the console.
   > created a state in CatNew
   > used event listeners to track and store user inputs
@@ -415,3 +433,43 @@ Watch Usage
   > created a handleClick to send it back
 
 ✅ As a developer, I have test coverage on my new page.
+```js
+  // import dependencies and react components
+  import { render, screen } from '@testing-library/react';
+  import { BrowserRouter } from 'react-router-dom'
+  // import component file
+  import CatNew from '../pages/CatNew';
+
+  describe('<CatNew />', () => {
+    it("renders the CatNew page", () => {
+      render(
+        <BrowserRouter>
+          <CatNew />
+        </BrowserRouter>
+      )
+      const element = screen.getByText(/catnew/i)
+      expect(element).toBeInTheDocument()
+    })
+  })
+```
+
+```js
+  import { render, screen } from '@testing-library/react';
+  import { BrowserRouter } from 'react-router-dom'
+  import CatNew from '../pages/CatNew';
+
+  describe('<CatNew />', () => {
+    // beforeEach() is a method that we can use to render our component before each testing block
+    beforeEach(() => {
+      render(
+        <BrowserRouter>
+          <CatNew />
+        </BrowserRouter>
+      )
+    })
+    it("renders the CatNew page", () => {
+      const element = screen.getByText(/catnew/i)
+      expect(element).toBeInTheDocument()
+    })
+  })
+```
