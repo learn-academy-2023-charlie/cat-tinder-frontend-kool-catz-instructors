@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, { useState } from "react"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import CatIndex from "./pages/CatIndex"
@@ -14,16 +14,22 @@ import "./App.css"
 const App = () => {
   const [cats, setCats] = useState(mockCats)
   // console.log("all the cats", cats)
-  return(
+
+  const createCat = (createdCat) => {
+    // This console log is still serving it's purpose until backend and frontend are connected
+    console.log("my created cat:", createdCat)
+  }
+
+  return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/catindex" element={<CatIndex cats={cats}/>}/>
-        <Route path="/catshow/:id" element={<CatShow cats={cats}/>}/>
-        <Route path="/catnew" element={<CatNew />}/>
-        <Route path="/catedit" element={<CatEdit />}/>
-        <Route path="*" element={<NotFound />}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/catindex" element={<CatIndex cats={cats} />} />
+        <Route path="/catshow/:id" element={<CatShow cats={cats} />} />
+        <Route path="/catnew" element={<CatNew createCat={createCat} />} />
+        <Route path="/catedit" element={<CatEdit />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>

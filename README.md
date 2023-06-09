@@ -366,3 +366,110 @@ Watch Usage
   )
 ```
 
+## Create Functionality: CatNew
+
+7 RESTful routes:
+1) show
+2) create
+3) update
+
+4) new
+5) edit
+
+6) destroy / delete
+7) index
+
+- **new** and **edit** are just routes that will display a form
+
+## User Stories
+✅ User can fill out a form to create a new cat
+```js
+  <Form>
+    <FormGroup>
+    // 'for' attr needs to match your id attr for the label below it
+      <Label for="exampleEmail">
+        Email
+      </Label>
+      <Input
+        // 'id' needs to match the 'for' attr value
+        id="exampleEmail"
+        // name is correlated with our database key aka I want my input to go here 
+        name="email"
+        // Text to be seen on render
+        placeholder="with a placeholder"
+        // 
+        type="email"
+      />
+    </FormGroup>
+  </Form>
+```
+
+
+✅ On submit be redirected to cat index
+```js
+  <Button onClick={handleClick} name="submit">
+    Submit
+  </Button>
+```
+
+### Developer Stories
+✅ As a developer, I can store the cat object in state.
+
+```js
+  const [newCat, setNewCat] = useState(
+    {
+      name: "",
+      age: "",
+      hobby: "",
+      image: ""
+    }
+  )
+```
+
+✅ As a developer, I can pass the cat object to App.js on submit and see the cat object logged in the console.
+  > created a state in CatNew
+  > used event listeners to track and store user inputs
+  > created createCat method to relay the information back to App.js
+  > created a handleClick to send it back
+
+✅ As a developer, I have test coverage on my new page.
+```js
+  // import dependencies and react components
+  import { render, screen } from '@testing-library/react';
+  import { BrowserRouter } from 'react-router-dom'
+  // import component file
+  import CatNew from '../pages/CatNew';
+
+  describe('<CatNew />', () => {
+    it("renders the CatNew page", () => {
+      render(
+        <BrowserRouter>
+          <CatNew />
+        </BrowserRouter>
+      )
+      const element = screen.getByText(/catnew/i)
+      expect(element).toBeInTheDocument()
+    })
+  })
+```
+
+```js
+  import { render, screen } from '@testing-library/react';
+  import { BrowserRouter } from 'react-router-dom'
+  import CatNew from '../pages/CatNew';
+
+  describe('<CatNew />', () => {
+    // beforeEach() is a method that we can use to render our component before each testing block
+    beforeEach(() => {
+      render(
+        <BrowserRouter>
+          <CatNew />
+        </BrowserRouter>
+      )
+    })
+    it("renders the CatNew page", () => {
+      const element = screen.getByText(/catnew/i)
+      expect(element).toBeInTheDocument()
+    })
+  })
+```
