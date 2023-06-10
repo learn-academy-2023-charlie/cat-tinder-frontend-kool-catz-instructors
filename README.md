@@ -473,3 +473,72 @@ Watch Usage
     })
   })
 ```
+***
+## Fetch 6/9/23
+- Fetch: allows you to send or get data across networks
+- Request: url to api endpoint
+- Response is delivered in 3 different states of a promise
+  - pending
+  - fulfilled
+  - rejected
+
+- Structure of a basic fetch
+```js
+fetch("/url")
+  // handle response by converting to json
+  .then(response => response.json())
+  // handle the data by printing to the console
+  .then(payload => console.log(payload))
+  // handle errors by catching and printing to the console
+  .catch(error => console.log(error))
+```
+
+## Process
+- Start servers for frontend and backend. Rails app will run on localhost:3000 and the React app will run on localhost:3001.
+
+### read functionality
+- Remove the mockCats from the initial value of the state variable  
+`const [cats, setCats] = useState([])`
+- setup read function
+```js
+  const readCat = () => {
+    // fetch() method to request data from the API index endpoint
+    fetch("http://localhost:3000/cats")
+    // .then() methods that handle the various states of a promise, To get the actual JSON of the response, we use response.json()
+    .then(response => response.json())
+    // we are using that json to update the values in our cats array, using the setter function
+    .then(payload => {
+      setCats(payload)
+    })
+    // If the request fails, we use the .catch method to handle the errors
+    .catch(error => console.log(error))
+  }
+```
+- react hook useEffect() will trigger the read function
+  - `import React, { useState, useEffect } from "react"`
+  - useEffect() will take two arguments: callback function that has the readCat function call and a dependency value to make sure the useEffect only runs once.  
+  `useEffect( () => {readCat(), []} )`
+
+### create functionality
+- Configure the request to allow fetch to send user inputs from the frontend to the backend to create a new instance.
+- setup create function
+```js
+  // user inputs are stored in an object, parameter will be createdCat
+  const createCat = (createdCat) => {
+    // fetch() method to request data from the API create endpoint and send the data in the body of the request
+    fetch("http://localhost:3000/cats", {
+      // converts the object to a string that can be passed in the request
+      body: JSON.stringify(createdCat),
+      // specify the info being sent in JSON and the info returning should be JSON
+      headers: {
+        "Content-Type": "application/json"
+      },
+      // HTTP verb so the correct endpoint is invoked on the server
+      method: "POST"
+    })
+      .then((response) => response.json())
+      .then((payload) => readCat())
+      .catch((errors) => console.log("Cat create errors:", errors))
+  }
+```
+
