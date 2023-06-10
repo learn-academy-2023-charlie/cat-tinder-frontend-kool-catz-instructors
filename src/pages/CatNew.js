@@ -50,8 +50,8 @@ const CatNew = ({ createCat }) => {
           <Input
             id="cat-age"
             name="age"
-            placeholder="2 years old"
-            type="text"
+            placeholder="2"
+            type="number"
             onChange={handleChange}
             value={newCat.age}
           />
